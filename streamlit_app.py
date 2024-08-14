@@ -40,7 +40,7 @@ for labeler_id, data in labelers_data.items():
     labeler_name = data["name"]
     
     # Assign color to labeler and save in the map
-    color = params.color_options[st.session_state.color_index % len(params.color_options)]
+    color = color_options[st.session_state.color_index % len(color_options)]
     st.session_state.color_index += 1
     labeler_color_map[labeler_id] = color
     
