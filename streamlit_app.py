@@ -29,13 +29,23 @@ labelers_data = get_labelers_data(start_date, end_date, params.urls)
 
 # Guardar los checkbox de visibilidad para cada etiquetador
 
-for labeler_id, data in labelers_data.items():
-    labeler_name = data["name"]
-    random.seed(labeler_id)
-    color = color_options[color_index % len(color_options)]
-    color_index += 1
-    colored_label = f":{color}[{labeler_name}]"
-    labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
+# Initialize or retrieve color assignments
+if 'color_assignments' not in st.session_state:
+    st.session_state.color_assignments = {}
+    color_index = 0
+    for labeler_id in labelers_data:
+        color = color_options[color_index % len(color_options)]
+        st.session_state.color_assignments[labeler_id] = color
+        color_index += 1
+
+# Initialize or retrieve labelers visibility
+if 'labelers_visibility' not in st.session_state:
+    st.session_state.labelers_visibility = {}
+    for labeler_id, data in labelers_data.items():
+        labeler_name = data["name"]
+        color = st.session_state.color_assignments[labeler_id]
+        colored_label = f":{color}[{labeler_name}]"
+        st.session_state.labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
 
 
 
