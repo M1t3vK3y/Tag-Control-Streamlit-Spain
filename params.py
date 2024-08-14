@@ -10,4 +10,6 @@ urls = [
         (st.secrets["URLS"]["URL2"],st.secrets["KEYS"]["KEY2"],st.secrets["NAMES"]["NAME2"])
 ]
 # Store visibility checkboxes for each labeler
-
+labelers_visibility = {}
+color_options = ["blue", "green", "orange", "red", "violet","gray"]
+color_index = 0
