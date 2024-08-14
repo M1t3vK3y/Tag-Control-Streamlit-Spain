@@ -26,6 +26,10 @@ end_date = st.sidebar.date_input("End Date")
 # Get the labelers' data
 labelers_data = get_labelers_data(start_date, end_date, params.urls)
 
+# Initialize session state for labelers visibility
+if 'labelers_visibility' not in st.session_state:
+    st.session_state.labelers_visibility = {}
+
 labeler_color_map = {}
 
 for labeler_id, data in labelers_data.items():
@@ -37,7 +41,10 @@ for labeler_id, data in labelers_data.items():
     labeler_color_map[labeler_id] = color
     
     colored_label = f":{color}[{labeler_name}]"
-    params.labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
+    if labeler_id not in st.session_state.labelers_visibility:
+        st.session_state.labelers_visibility[labeler_id] = True
+    st.session_state.labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=st.session_state.labelers_visibility[labeler_id], key=labeler_id)
+
 
 selected_labelers = {labeler_id: data for labeler_id, data in labelers_data.items() if params.labelers_visibility[labeler_id]}
 if selected_labelers:
