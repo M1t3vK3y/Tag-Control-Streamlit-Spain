@@ -35,24 +35,6 @@ for labeler_id, data in labelers_data.items():
     color_index += 1
     colored_label = f":{color}[{labeler_name}]"
     labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
-# Initialize or retrieve color assignments
-if 'color_assignments' not in st.session_state:
-    st.session_state.color_assignments = {}
-    color_index = 0
-    for labeler_id in labelers_data:
-        color = color_options[color_index % len(color_options)]
-        st.session_state.color_assignments[labeler_id] = color
-        color_index += 1
-
-# Initialize or retrieve labelers visibility
-if 'labelers_visibility' not in st.session_state:
-    st.session_state.labelers_visibility = {}
-    for labeler_id, data in labelers_data.items():
-        labeler_name = data["name"]
-        color = st.session_state.color_assignments[labeler_id]
-        colored_label = f":{color}[{labeler_name}]"
-        st.session_state.labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
-
 
 
 selected_labelers = {labeler_id: data for labeler_id, data in labelers_data.items() if labelers_visibility[labeler_id]}
@@ -66,7 +48,7 @@ if selected_labelers:
         color_index = 0
         for labeler_id, data in selected_labelers.items():
             total_images = sum(data['urls'][url]['images'] for url in data['urls'])
-            color = color_options[color_index % len(color_options)]
+            color = color_options[labeler_id % len(color_options)]
             fig1.add_trace(go.Bar(
                 x=[data['name']],
                 y=[total_images],
@@ -83,7 +65,7 @@ if selected_labelers:
         color_index = 0
         for labeler_id, data in selected_labelers.items():
             total_boxes = sum(data['urls'][url]['boxes'] for url in data['urls'])
-            color = color_options[color_index % len(color_options)]
+            color = color_options[labeler_id % len(color_options)]
             fig2.add_trace(go.Bar(
                 x=[data['name']],
                 y=[total_boxes],
@@ -131,7 +113,7 @@ if selected_labelers:
                 if url in data["urls"]:
                     images = data["urls"][url]["images"]
                     images_progress = min((images / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
-                    color = color_options[color_index % len(color_options)]
+                    color = color_options[labeler_id % len(color_options)]
                     st.progress(images_progress)
                     st.subheader(f':{color}[{data["name"]}]: {images} / 500')
                     color_index += 1
@@ -146,7 +128,7 @@ if selected_labelers:
                 if url in data["urls"]:
                     boxes = data["urls"][url]["boxes"]
                     boxes_progress = min((boxes / 8000), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
-                    color = color_options[color_index % len(color_options)]
+                    color = color_options[labeler_id % len(color_options)]
                     st.progress(boxes_progress)
                     st.subheader(f':{color}[{data["name"]}]: {boxes} / 8000')
                     color_index += 1
