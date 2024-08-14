@@ -47,6 +47,7 @@ if selected_labelers:
     # Gráfico de "Imágenes Etiquetadas"
     with col1:
         fig1 = go.Figure()
+        color_index = 0
         for labeler_id, data in selected_labelers.items():
             total_images = sum(data['urls'][url]['images'] for url in data['urls'])
             color = color_options[color_index % len(color_options)]
@@ -56,6 +57,7 @@ if selected_labelers:
                 name=data['name'],
                 marker_color=color
             ))
+            color_index += 1
         fig1.update_layout(title='Imágenes Etiquetadas por Etiquetador 🚀🚀🚀', xaxis_title='Etiquetador', yaxis_title='Imágenes Etiquetadas')
         st.plotly_chart(fig1)
     
