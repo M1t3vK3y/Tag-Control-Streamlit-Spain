@@ -55,7 +55,7 @@ if 'labelers_visibility' not in st.session_state:
 
 
 
-selected_labelers = {labeler_id: data for labeler_id, data in labelers_data.items() if st.session_state.labelers_visibility[labeler_id]}
+selected_labelers = {labeler_id: data for labeler_id, data in labelers_data.items() if labelers_visibility[labeler_id]}
 if selected_labelers:
     # Dividir en dos columnas
     col1, col2 = st.columns(2)
