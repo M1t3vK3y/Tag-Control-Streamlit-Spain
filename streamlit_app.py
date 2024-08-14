@@ -95,7 +95,7 @@ if selected_labelers:
         labels = [data['name'] for data in selected_labelers.values()]
         values = [sum(data['urls'][url]['images'] for url in data['urls']) for data in selected_labelers.values()]    
         # Create a list of colors for the pie chart
-        colors = [color_options[i % len(color_options)] for i in range(len(labels))]
+        colors = [assigned_colors[labeler_id] for labeler_id in selected_labelers.keys()]
         fig3.add_trace(go.Pie(labels=labels, values=values, marker=dict(colors=colors)))
         fig3.update_layout(title='Percentage of Images Labeled by Labeler')
         st.plotly_chart(fig3)
@@ -105,7 +105,7 @@ if selected_labelers:
         fig4 = go.Figure()
         labels = [data['name'] for data in selected_labelers.values()]
         values = [sum(data['urls'][url]['boxes'] for url in data['urls']) for data in selected_labelers.values()]
-        colors = [color_options[i % len(color_options)] for i in range(len(labels))]
+        colors = [assigned_colors[labeler_id] for labeler_id in selected_labelers.keys()]
         fig4.add_trace(go.Pie(labels=labels, values=values, marker=dict(colors=colors)))
         fig4.update_layout(title='Percentage of Boxes Labeled by Labeler')
         st.plotly_chart(fig4)
