@@ -83,7 +83,7 @@ if selected_labelers:
         fig3 = go.Figure()
         labels = [data['name'] for data in selected_labelers.values()]
         values = [sum(data['urls'][url]['images'] for url in data['urls']) for data in selected_labelers.values()]
-        colors = labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
+        colors = [labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
         fig3.add_trace(go.Pie(labels=labels, values=values, marker=dict(colors=colors)))
         fig3.update_layout(title='Percentage of Images Labeled by Labeler')
         st.plotly_chart(fig3)
@@ -93,7 +93,7 @@ if selected_labelers:
         fig4 = go.Figure()
         labels = [data['name'] for data in selected_labelers.values()]
         values = [sum(data['urls'][url]['boxes'] for url in data['urls']) for data in selected_labelers.values()]
-        colors = labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
+        colors = [labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
         fig4.add_trace(go.Pie(labels=labels, values=values, marker=dict(colors=colors)))
         fig4.update_layout(title='Percentage of Boxes Labeled by Labeler')
         st.plotly_chart(fig4)
@@ -111,7 +111,7 @@ if selected_labelers:
                 if url in data["urls"]:
                     images = data["urls"][url]["images"]
                     images_progress = min((images / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
-                    color = labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
+                    color = [labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
                     st.progress(images_progress)
                     st.subheader(f':{color}[{data["name"]}]: {images} / 500')
 
@@ -124,6 +124,6 @@ if selected_labelers:
                 if url in data["urls"]:
                     boxes = data["urls"][url]["boxes"]
                     boxes_progress = min((boxes / 8000), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
-                    color = labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
+                    color = [labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
                     st.progress(boxes_progress)
                     st.subheader(f':{color}[{data["name"]}]: {boxes} / 8000')
