@@ -97,7 +97,7 @@ if selected_labelers:
         fig4 = go.Figure()
         labels = [data['name'] for data in selected_labelers.values()]
         values = [sum(data['urls'][url]['boxes'] for url in data['urls']) for data in selected_labelers.values()]
-        colors = [color_options[labeler_id % len(color_options)] for labeler_id in selected_labelers.keys()]
+        colors = [color_options[i % len(color_options)] for i in range(len(labels))]
         fig4.add_trace(go.Pie(labels=labels, values=values, marker=dict(colors=colors)))
         fig4.update_layout(title='Percentage of Boxes Labeled by Labeler')
         st.plotly_chart(fig4)
@@ -110,6 +110,7 @@ if selected_labelers:
         st.subheader('Progress of Images Labeled')
         for url, api_key, name in params.urls:
             st.markdown(f"<h4 style='text-align: center; text-decoration: underline;'>{name}</h4>", unsafe_allow_html=True)
+            color_index = 0
             for labeler_id, data in selected_labelers.items():
                 if url in data["urls"]:
                     images = data["urls"][url]["images"]
@@ -117,12 +118,14 @@ if selected_labelers:
                     color = color_options[color_index % len(color_options)]
                     st.progress(images_progress)
                     st.subheader(f':{color}[{data["name"]}]: {images} / 500')
+                    color_index += 1
 
     # Barra de progreso para cajas etiquetadas
     with col6:
         st.subheader('Progress of Boxes Labeled')
         for url, api_key, name in params.urls:
             st.markdown(f"<h4 style='text-align: center; text-decoration: underline;'>{name}</h4>", unsafe_allow_html=True)
+            color_index = 0
             for labeler_id, data in selected_labelers.items():
                 if url in data["urls"]:
                     boxes = data["urls"][url]["boxes"]
@@ -130,3 +133,4 @@ if selected_labelers:
                     color = color_options[color_index % len(color_options)]
                     st.progress(boxes_progress)
                     st.subheader(f':{color}[{data["name"]}]: {boxes} / 8000')
+                    color_index += 1
