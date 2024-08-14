@@ -28,7 +28,13 @@ end_date = st.sidebar.date_input("End Date")
 labelers_data = get_labelers_data(start_date, end_date, params.urls)
 
 # Guardar los checkbox de visibilidad para cada etiquetador
-
+for labeler_id, data in labelers_data.items():
+    labeler_name = data["name"]
+    random.seed(labeler_id)
+    color = color_options[color_index % len(color_options)]
+    color_index += 1
+    colored_label = f":{color}[{labeler_name}]"
+    labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
 # Initialize or retrieve color assignments
 if 'color_assignments' not in st.session_state:
     st.session_state.color_assignments = {}
