@@ -108,9 +108,9 @@ if selected_labelers:
     # Barra de progreso para imágenes etiquetadas
     with col5:
         st.subheader('Progress of Images Labeled')
+        color_index = 0
         for url, api_key, name in params.urls:
             st.markdown(f"<h4 style='text-align: center; text-decoration: underline;'>{name}</h4>", unsafe_allow_html=True)
-            color_index = 0
             for labeler_id, data in selected_labelers.items():
                 if url in data["urls"]:
                     images = data["urls"][url]["images"]
@@ -123,9 +123,9 @@ if selected_labelers:
     # Barra de progreso para cajas etiquetadas
     with col6:
         st.subheader('Progress of Boxes Labeled')
+        color_index = 0
         for url, api_key, name in params.urls:
             st.markdown(f"<h4 style='text-align: center; text-decoration: underline;'>{name}</h4>", unsafe_allow_html=True)
-            color_index = 0
             for labeler_id, data in selected_labelers.items():
                 if url in data["urls"]:
                     boxes = data["urls"][url]["boxes"]
