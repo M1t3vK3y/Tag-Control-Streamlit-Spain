@@ -6,7 +6,9 @@ import logging
 from functions import get_labelers_data
 import params 
 
-    
+labelers_visibility = {}
+color_options = ["blue", "green", "orange", "red", "violet","gray"]
+color_index = 0    
 st.set_page_config(layout="wide")
 
 # Configure logging to save to a file
