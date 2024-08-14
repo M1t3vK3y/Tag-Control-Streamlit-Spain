@@ -29,10 +29,10 @@ labelers_data = get_labelers_data(start_date, end_date, params.urls)
 for labeler_id, data in labelers_data.items():
     labeler_name = data["name"]
     random.seed(labeler_id)
-    color = color_options[color_index % len(color_options)]
-    color_index += 1
+    color = params.color_options[params.color_index % len(params.color_options)]
+    params.color_index += 1
     colored_label = f":{color}[{labeler_name}]"
-    labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
+    params.labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
 
 selected_labelers = {labeler_id: data for labeler_id, data in labelers_data.items() if params.labelers_visibility[labeler_id]}
 if selected_labelers:
