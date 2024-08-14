@@ -4,7 +4,7 @@ import random
 import plotly.graph_objects as go
 import logging
 from functions import get_labelers_data
-from params import urls, labelers_visibility, color_options, color_index
+from params import urls, labelers_visibility, color_options, color_index, labeler_color_map
 import params
 
 st.set_page_config(layout="wide")
