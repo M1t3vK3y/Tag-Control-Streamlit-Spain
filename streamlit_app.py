@@ -27,7 +27,7 @@ end_date = st.sidebar.date_input("End Date")
 labelers_data = get_labelers_data(start_date, end_date, params.urls)
 
 labeler_color_map = {}
-
+labelers_visibility = {}
 for labeler_id, data in labelers_data.items():
     labeler_name = data["name"]
     
@@ -37,9 +37,9 @@ for labeler_id, data in labelers_data.items():
     labeler_color_map[labeler_id] = color
     
     colored_label = f":{color}[{labeler_name}]"
-    params.labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
+    labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
 
-selected_labelers = {labeler_id: data for labeler_id, data in labelers_data.items() if params.labelers_visibility[labeler_id]}
+selected_labelers = {labeler_id: data for labeler_id, data in labelers_data.items() if labelers_visibility[labeler_id]}
 if selected_labelers:
     # Split into two columns
     col1, col2 = st.columns(2)
