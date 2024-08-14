@@ -6,9 +6,6 @@ import logging
 from functions import get_labelers_data
 import params 
 
-labelers_visibility = {}
-color_options = ["blue", "green", "orange", "red", "violet","gray"]
-color_index = 0    
 st.set_page_config(layout="wide")
 
 # Configure logging to save to a file
@@ -29,29 +26,20 @@ end_date = st.sidebar.date_input("End Date")
 # Get the labelers' data
 labelers_data = get_labelers_data(start_date, end_date, params.urls)
 
-if 'labelers_visibility' not in st.session_state:
-    st.session_state.labelers_visibility = {}
-if 'color_index' not in st.session_state:
-    st.session_state.color_index = 0
-
 labeler_color_map = {}
 
 for labeler_id, data in labelers_data.items():
     labeler_name = data["name"]
     
     # Assign color to labeler and save in the map
-    color = color_options[st.session_state.color_index % len(color_options)]
-    st.session_state.color_index += 1
+    color = params.color_options[params.color_index % len(params.color_options)]
+    params.color_index += 1
     labeler_color_map[labeler_id] = color
     
-    # Check if labeler_id exists in session_state, otherwise default to True
-    if labeler_id not in st.session_state.labelers_visibility:
-        st.session_state.labelers_visibility[labeler_id] = True
-    
     colored_label = f":{color}[{labeler_name}]"
-    st.session_state.labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=st.session_state.labelers_visibility[labeler_id], key=labeler_id)
+    params.labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
 
-selected_labelers = {labeler_id: data for labeler_id, data in labelers_data.items() if st.session_state.labelers_visibility[labeler_id]}
+selected_labelers = {labeler_id: data for labeler_id, data in labelers_data.items() if params.labelers_visibility[labeler_id]}
 if selected_labelers:
     # Split into two columns
     col1, col2 = st.columns(2)
@@ -122,7 +110,7 @@ if selected_labelers:
             for labeler_id, data in selected_labelers.items():
                 if url in data["urls"]:
                     images = data["urls"][url]["images"]
-                    images_progress = min((images / 500), 1.0)  # Ensure it's within the range [0.0, 1.0]
+                    images_progress = min((images / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
                     color = labeler_color_map[labeler_id]
                     st.progress(images_progress)
                     st.subheader(f':{color}[{data["name"]}]: {images} / 500')
@@ -135,7 +123,7 @@ if selected_labelers:
             for labeler_id, data in selected_labelers.items():
                 if url in data["urls"]:
                     boxes = data["urls"][url]["boxes"]
-                    boxes_progress = min((boxes / 8000), 1.0)  # Ensure it's within the range [0.0, 1.0]
+                    boxes_progress = min((boxes / 8000), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
                     color = labeler_color_map[labeler_id]
                     st.progress(boxes_progress)
                     st.subheader(f':{color}[{data["name"]}]: {boxes} / 8000')
