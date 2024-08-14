@@ -27,6 +27,17 @@ end_date = st.sidebar.date_input("End Date")
 # Get the labelers' data
 labelers_data = get_labelers_data(start_date, end_date, params.urls)
 
+
+
+assigned_colors = {}
+for labeler_id, data in labelers_data.items():
+    if labeler_id not in assigned_colors:
+        random.seed(labeler_id)  # Para asegurar una asignación consistente
+        color = color_options[color_index % len(color_options)]
+        assigned_colors[labeler_id] = color
+        color_index += 1
+
+
 # Guardar los checkbox de visibilidad para cada etiquetador
 for labeler_id, data in labelers_data.items():
     labeler_name = data["name"]
@@ -48,7 +59,7 @@ if selected_labelers:
         color_index = 0
         for labeler_id, data in selected_labelers.items():
             total_images = sum(data['urls'][url]['images'] for url in data['urls'])
-            color = color_options[color_index % len(color_options)]
+            color = assigned_colors[labeler_id]
             fig1.add_trace(go.Bar(
                 x=[data['name']],
                 y=[total_images],
@@ -65,7 +76,7 @@ if selected_labelers:
         color_index = 0
         for labeler_id, data in selected_labelers.items():
             total_boxes = sum(data['urls'][url]['boxes'] for url in data['urls'])
-            color = color_options[color_index % len(color_options)]
+            color = assigned_colors[labeler_id]
             fig2.add_trace(go.Bar(
                 x=[data['name']],
                 y=[total_boxes],
@@ -113,7 +124,7 @@ if selected_labelers:
                 if url in data["urls"]:
                     images = data["urls"][url]["images"]
                     images_progress = min((images / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
-                    color = color_options[color_index % len(color_options)]
+                    color = assigned_colors[labeler_id]
                     st.progress(images_progress)
                     st.subheader(f':{color}[{data["name"]}]: {images} / 500')
                     color_index += 1
@@ -128,7 +139,7 @@ if selected_labelers:
                 if url in data["urls"]:
                     boxes = data["urls"][url]["boxes"]
                     boxes_progress = min((boxes / 8000), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
-                    color = color_options[intcolor_index % len(color_options)]
+                    color = assigned_colors[labeler_id]
                     st.progress(boxes_progress)
                     st.subheader(f':{color}[{data["name"]}]: {boxes} / 8000')
                     color_index += 1
