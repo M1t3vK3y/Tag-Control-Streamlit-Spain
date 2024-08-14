@@ -48,11 +48,11 @@ if selected_labelers:
     with col1:
         fig1 = go.Figure()
         for labeler_id, data in selected_labelers.items():
-            random.seed(labeler_id)
-            color = color_options[list(labelers_visibility.keys()).index(labeler_id) % len(color_options)]
+            total_images = sum(data['urls'][url]['images'] for url in data['urls'])
+            color = labeler_color_map[labeler_id]
             fig1.add_trace(go.Bar(
                 x=[data['name']],
-                y=[data['images']],
+                y=[total_images],
                 name=data['name'],
                 marker_color=color
             ))
@@ -63,11 +63,11 @@ if selected_labelers:
     with col2:
         fig2 = go.Figure()
         for labeler_id, data in selected_labelers.items():
-            random.seed(labeler_id)
-            color = color_options[list(labelers_visibility.keys()).index(labeler_id) % len(color_options)]
+            total_boxes = sum(data['urls'][url]['boxes'] for url in data['urls'])
+            color = labeler_color_map[labeler_id]
             fig2.add_trace(go.Bar(
                 x=[data['name']],
-                y=[data['boxes']],
+                y=[total_boxes],
                 name=data['name'],
                 marker_color=color
             ))
@@ -82,7 +82,7 @@ if selected_labelers:
         fig3 = go.Figure()
         labels = [data['name'] for data in selected_labelers.values()]
         values = [data['images'] for data in selected_labelers.values()]
-        colors = [color_options[list(labelers_visibility.keys()).index(labeler_id) % len(color_options)] for labeler_id in selected_labelers.keys()]
+        colors = [labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
         fig3.add_trace(go.Pie(labels=labels, values=values, marker=dict(colors=colors)))
         fig3.update_layout(title='Porcentaje de Imágenes Etiquetadas por Etiquetador')
         st.plotly_chart(fig3)
@@ -92,7 +92,7 @@ if selected_labelers:
         fig4 = go.Figure()
         labels = [data['name'] for data in selected_labelers.values()]
         values = [data['boxes'] for data in selected_labelers.values()]
-        colors = [color_options[list(labelers_visibility.keys()).index(labeler_id) % len(color_options)] for labeler_id in selected_labelers.keys()]
+        colors = [labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
         fig4.add_trace(go.Pie(labels=labels, values=values, marker=dict(colors=colors)))
         fig4.update_layout(title='Porcentaje de Cajas Etiquetadas por Etiquetador')
         st.plotly_chart(fig4)
