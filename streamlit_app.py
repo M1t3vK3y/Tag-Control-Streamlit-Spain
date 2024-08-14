@@ -64,6 +64,7 @@ if selected_labelers:
     # Gráfico de "Cajas Etiquetadas"
     with col2:
         fig2 = go.Figure()
+        color_index = 0
         for labeler_id, data in selected_labelers.items():
             total_boxes = sum(data['urls'][url]['boxes'] for url in data['urls'])
             color = color_options[color_index % len(color_options)]
@@ -73,6 +74,7 @@ if selected_labelers:
                 name=data['name'],
                 marker_color=color
             ))
+            color_index += 1
         fig2.update_layout(title='Cajas Etiquetadas por Etiquetador 🚀🚀🚀', xaxis_title='Etiquetador', yaxis_title='Cajas Etiquetadas')
         st.plotly_chart(fig2)
 if selected_labelers:
