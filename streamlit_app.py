@@ -29,10 +29,16 @@ labelers_data = get_labelers_data(start_date, end_date, params.urls)
 for labeler_id, data in labelers_data.items():
     labeler_name = data["name"]
     random.seed(labeler_id)
-    params.labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
+    
+    # Asegúrate de aplicar el color correcto antes de usar `colored_label`
     color = params.color_options[list(params.labelers_visibility.keys()).index(labeler_id) % len(params.color_options)]
-    params.color_index += 1
     colored_label = f":{color}[{labeler_name}]"
+    
+    # Ahora puedes crear la checkbox con el label coloreado
+    params.labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
+    
+    # Incrementa el índice de color después de asignarlo
+    params.color_index += 1
 
 selected_labelers = {labeler_id: data for labeler_id, data in labelers_data.items() if params.labelers_visibility[labeler_id]}
 if selected_labelers:
