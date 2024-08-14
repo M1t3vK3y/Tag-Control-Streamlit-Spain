@@ -31,14 +31,11 @@ labelers_data = get_labelers_data(start_date, end_date, params.urls)
 
 for labeler_id, data in labelers_data.items():
     labeler_name = data["name"]
-    
-    # Assign color to labeler and save in the map
-    color = params.color_options[params.color_index % len(params.color_options)]
-    params.color_index += 1
-    labeler_color_map[labeler_id] = color
-    
+    random.seed(labeler_id)
+    color = color_options[color_index % len(color_options)]
+    color_index += 1
     colored_label = f":{color}[{labeler_name}]"
-    params.labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
+    labelers_visibility[labeler_id] = st.sidebar.checkbox(colored_label, value=True, key=labeler_id)
 
 
 
@@ -52,7 +49,7 @@ if selected_labelers:
         fig1 = go.Figure()
         for labeler_id, data in selected_labelers.items():
             total_images = sum(data['urls'][url]['images'] for url in data['urls'])
-            color = labeler_color_map[labeler_id]
+            color = color_options[color_index % len(color_options)]
             fig1.add_trace(go.Bar(
                 x=[data['name']],
                 y=[total_images],
@@ -67,7 +64,7 @@ if selected_labelers:
         fig2 = go.Figure()
         for labeler_id, data in selected_labelers.items():
             total_boxes = sum(data['urls'][url]['boxes'] for url in data['urls'])
-            color = labeler_color_map[labeler_id]
+            color = color_options[color_index % len(color_options)]
             fig2.add_trace(go.Bar(
                 x=[data['name']],
                 y=[total_boxes],
@@ -85,7 +82,7 @@ if selected_labelers:
         fig3 = go.Figure()
         labels = [data['name'] for data in selected_labelers.values()]
         values = [data['images'] for data in selected_labelers.values()]
-        colors = [labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
+        colors = color_options[color_index % len(color_options)]
         fig3.add_trace(go.Pie(labels=labels, values=values, marker=dict(colors=colors)))
         fig3.update_layout(title='Porcentaje de Imágenes Etiquetadas por Etiquetador')
         st.plotly_chart(fig3)
@@ -95,7 +92,7 @@ if selected_labelers:
         fig4 = go.Figure()
         labels = [data['name'] for data in selected_labelers.values()]
         values = [data['boxes'] for data in selected_labelers.values()]
-        colors = [labeler_color_map[labeler_id] for labeler_id in selected_labelers.keys()]
+        colors = color_options[color_index % len(color_options)]
         fig4.add_trace(go.Pie(labels=labels, values=values, marker=dict(colors=colors)))
         fig4.update_layout(title='Porcentaje de Cajas Etiquetadas por Etiquetador')
         st.plotly_chart(fig4)
@@ -108,7 +105,7 @@ if selected_labelers:
         st.subheader('Progreso de Imágenes Etiquetadas')
         for labeler_id, data in selected_labelers.items():
             images_progress = min((data['images'] / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
-            color = color_options[list(labelers_visibility.keys()).index(labeler_id) % len(color_options)]
+            color = color_options[color_index % len(color_options)]
             st.progress(images_progress)
             st.subheader(f':{color}[{data["name"]}]: {data["images"]} / 500')
 
@@ -117,6 +114,6 @@ if selected_labelers:
         st.subheader('Progreso de Cajas Etiquetadas')
         for labeler_id, data in selected_labelers.items():
             boxes_progress = min((data['boxes'] / 8000), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
-            color = color_options[list(labelers_visibility.keys()).index(labeler_id) % len(color_options)]
+            color = color_options[color_index % len(color_options)]
             st.progress(boxes_progress)
             st.subheader(f':{color}[{data["name"]}]: {data["boxes"]} / 8000')
