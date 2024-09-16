@@ -15,6 +15,7 @@ def get_labelers_data(start_date, end_date, urls):
             "startDate": start_date.strftime("%Y-%m-%d"),
             "endDate": end_date.strftime("%Y-%m-%d")
         }
+         full_url = f"{url}?api_key={api_key}&startDate={start_date.strftime('%Y-%m-%d')}&endDate={end_date.strftime('%Y-%m-%d')}"#esto fuera
         logging.info(f"Making request to {url} with params {params}")
         response = requests.get(url, params=params)
         if response.status_code == 200:
