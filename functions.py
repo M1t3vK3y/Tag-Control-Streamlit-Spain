@@ -7,6 +7,7 @@ import logging
 @st.cache_data
 def get_labelers_data(start_date, end_date, urls):
     labelers_data = {}
+    fetched_urls = [] #esto fuera
     logging.info(f"Fetching data from {start_date} to {end_date}")
     for url, api_key, _ in urls:
         params = {
