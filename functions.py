@@ -21,7 +21,7 @@ def get_labelers_data(start_date, end_date, urls):
         if response.status_code == 200:
             data = response.json()
             logging.info(f"Data received from {url}: {data}")
-            fetched_urls.append(url) #esta fuera
+            fetched_urls.append(full_url) #esta fuera
             labelers = data["labelers"]
             for labeler in labelers:
                 labeler_id = labeler["id"]
