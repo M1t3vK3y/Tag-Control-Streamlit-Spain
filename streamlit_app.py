@@ -25,7 +25,7 @@ start_date = st.sidebar.date_input("Start Date")
 end_date = st.sidebar.date_input("End Date")
 
 # Get the labelers' data
-labelers_data, fetched_urls = get_labelers_data(start_date, end_date, params.urls)
+labelers_data = get_labelers_data(start_date, end_date, params.urls)
 
 
 
@@ -142,7 +142,4 @@ if selected_labelers:
                     st.progress(boxes_progress)
                     st.subheader(f':{color}[{data["name"]}]: {boxes} / 8000')
                     color_index += 1
-if fetched_urls:
-    st.write("Datos de los etiquetadores obtenidos de las siguientes páginas:")
-    for url in fetched_urls:
-        st.write(url)
+
