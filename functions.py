@@ -19,6 +19,7 @@ def get_labelers_data(start_date, end_date, urls):
         if response.status_code == 200:
             data = response.json()
             logging.info(f"Data received from {url}: {data}")
+            fetched_urls.append(url) #esta fuera
             labelers = data["labelers"]
             for labeler in labelers:
                 labeler_id = labeler["id"]
@@ -40,4 +41,4 @@ def get_labelers_data(start_date, end_date, urls):
             st.error(f"Error making API request: {url}")
             logging.error(f"Request error to {url}: {response.status_code}")
     logging.info(f"Accumulated data: {labelers_data}")
-    return labelers_data
+    return labelers_data, fetched_urls #quitrar el fetched
