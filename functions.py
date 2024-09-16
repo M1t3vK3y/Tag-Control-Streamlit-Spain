@@ -7,7 +7,7 @@ import logging
 @st.cache_data
 def get_labelers_data(start_date, end_date, urls):
     labelers_data = {}
-    fetched_urls = [] #esto fuera
+    
     logging.info(f"Fetching data from {start_date} to {end_date}")
     for url, api_key, _ in urls:
         params = {
@@ -15,13 +15,13 @@ def get_labelers_data(start_date, end_date, urls):
             "startDate": start_date.strftime("%Y-%m-%d"),
             "endDate": end_date.strftime("%Y-%m-%d")
         }
-        full_url = f"{url}?api_key={api_key}&startDate={start_date.strftime('%Y-%m-%d')}&endDate={end_date.strftime('%Y-%m-%d')}"#esto fuera
+        
         logging.info(f"Making request to {url} with params {params}")
         response = requests.get(url, params=params)
         if response.status_code == 200:
             data = response.json()
             logging.info(f"Data received from {url}: {data}")
-            fetched_urls.append(full_url) #esta fuera
+            
             labelers = data["labelers"]
             for labeler in labelers:
                 labeler_id = labeler["id"]
@@ -43,4 +43,4 @@ def get_labelers_data(start_date, end_date, urls):
             st.error(f"Error making API request: {url}")
             logging.error(f"Request error to {url}: {response.status_code}")
     logging.info(f"Accumulated data: {labelers_data}")
-    return labelers_data, fetched_urls #quitrar el fetched
+    return labelers_data
