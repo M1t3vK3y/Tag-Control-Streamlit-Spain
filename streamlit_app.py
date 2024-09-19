@@ -127,23 +127,20 @@ if selected_labelers:
                     color = assigned_colors[labeler_id]
                     st.progress(images_progress)
                     st.subheader(f':{color}[{data["name"]}]: {images} / 500')
-                    subcol1, subcol2, subcol3 = st.columns(3)
+                    subcol1, subcol2= st.columns(2)
                     with subcol1:
                          st.write("")  # Esto se puede usar para un pequeño espacio
-                         st.empty()    # Esto ocupa más espacio visualmente
+                         st.metric(label="", value="", delta="")   # Esto ocupa más espacio visualmente
                          st.write("")
 
                     # Mostrar información de "boxesRemoved"
                     with subcol2:
                          st.write("")  # Esto se puede usar para un pequeño espacio
-                         st.empty()    # Esto ocupa más espacio visualmente
+                         st.metric(label="", value="", delta="")    # Esto ocupa más espacio visualmente
                          st.write("")
 
                     # Mostrar información de "boxesUpdated"
-                    with subcol3:
-                         st.write("")  # Esto se puede usar para un pequeño espacio
-                         st.empty()    # Esto ocupa más espacio visualmente
-                         st.write("")
+                    
                     color_index += 1
     
     # Progress of Boxes Labeled
