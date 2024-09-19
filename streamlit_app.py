@@ -130,7 +130,8 @@ if selected_labelers:
                     subcol1, subcol2= st.columns(2)
                     with subcol1:
                          st.write("")  # Esto se puede usar para un pequeño espacio
-                         st.metric(label="", value="", delta="")   # Esto ocupa más espacio visualmente
+                         st.metric(label="", value="", delta="") 
+                         st.metric(label="", value="", delta="")# Esto ocupa más espacio visualmente
                          st.write("")
 
                     # Mostrar información de "boxesRemoved"
