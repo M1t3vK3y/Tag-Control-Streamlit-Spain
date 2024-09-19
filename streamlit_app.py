@@ -127,6 +127,7 @@ if selected_labelers:
                     color = assigned_colors[labeler_id]
                     st.progress(images_progress)
                     st.subheader(f':{color}[{data["name"]}]: {images} / 500')
+                    st.write('')
                     color_index += 1
     
     # Progress of Boxes Labeled
