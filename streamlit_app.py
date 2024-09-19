@@ -132,13 +132,13 @@ if selected_labelers:
                          st.write("")  # Esto se puede usar para un pequeño espacio
                          st.metric(label="", value="", delta="") 
                          st.metric(label="", value="", delta="")# Esto ocupa más espacio visualmente
-                         st.write("")
+                         
 
                     # Mostrar información de "boxesRemoved"
                     with subcol2:
                          st.write("")  # Esto se puede usar para un pequeño espacio
                          st.metric(label="", value="", delta="")    # Esto ocupa más espacio visualmente
-                         st.write("")
+                         
 
                     # Mostrar información de "boxesUpdated"
                     
