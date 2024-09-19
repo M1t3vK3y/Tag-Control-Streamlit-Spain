@@ -143,3 +143,7 @@ if selected_labelers:
                     st.subheader(f':{color}[{data["name"]}]: {boxes} / 8000')
                     color_index += 1
 
+st.markdown("---")  # Línea divisoria
+st.subheader("URLs utilizadas para la obtención de datos")
+for url, _, name in params.urls:
+    st.write(f"- {name}: {url}")
