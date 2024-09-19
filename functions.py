@@ -21,7 +21,7 @@ def get_labelers_data(start_date, end_date, urls):
         
         # **Imprimir el contenido completo de la respuesta**
         logging.info(f"Response from {url}: {response.text}")  # Imprimir la respuesta completa para debug
-        #st.write(f"Response from {url}: {response.text}")  # Mostrar en la interfaz de Streamlit
+        st.write(f"Response from {url}: {response.text}")  # Mostrar en la interfaz de Streamlit
         
         if response.status_code == 200:
             data = response.json()
