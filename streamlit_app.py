@@ -129,7 +129,7 @@ if selected_labelers:
                     st.subheader(f':{color}[{data["name"]}]: {images} / 500')
                     subcol1, subcol2= st.columns(2)
                     with subcol1:
-                         st.write("")  # Esto se puede usar para un pequeño espacio
+                           # Esto se puede usar para un pequeño espacio
                          st.metric(label="", value="", delta="") 
                          st.metric(label="", value="", delta="")# Esto ocupa más espacio visualmente
                          
@@ -137,7 +137,7 @@ if selected_labelers:
                     # Mostrar información de "boxesRemoved"
                     with subcol2:
                          st.write("")  # Esto se puede usar para un pequeño espacio
-                         st.metric(label="", value="", delta="")    # Esto ocupa más espacio visualmente
+                        
                          
 
                     # Mostrar información de "boxesUpdated"
