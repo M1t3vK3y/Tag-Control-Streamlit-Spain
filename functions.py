@@ -46,7 +46,10 @@ def get_labelers_data(start_date, end_date, urls):
                 
                 labelers_data[labeler_id]["urls"][url] = {
                     "images": images_labeled,
-                    "boxes": boxes_labeled
+                    "boxes": boxes_labeled,
+                    "boxesAdded": boxes_added,    # <-- Añadimos el valor de boxesAdded
+                    "boxesRemoved": boxes_removed, # <-- Añadimos el valor de boxesRemoved
+                    "boxesUpdated": boxes_updated  # <-- Añadimos el valor de boxesUpdated
                 }
         else:
             st.error(f"Error making API request: {url}")
