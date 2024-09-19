@@ -144,6 +144,7 @@ if selected_labelers:
                     color_index += 1
 
 st.markdown("---")  # Línea divisoria
-st.subheader("URLs utilizadas para la obtención de datos")
-for url, _, name in params.urls:
-    st.write(f"- {name}: {url}")
+st.subheader("URLs utilizadas para la obtención de datos (incluyendo las fechas seleccionadas)")
+for url, api_key, name in params.urls:
+    full_url = f"{url}?api_key={api_key}&startDate={start_date.strftime('%Y-%m-%d')}&endDate={end_date.strftime('%Y-%m-%d')}"
+    st.write(f"- {name}: {full_url}")
