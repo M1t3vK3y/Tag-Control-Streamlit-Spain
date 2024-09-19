@@ -128,7 +128,7 @@ if selected_labelers:
                     st.subheader(f':{color}[{data["name"]}]: {images} / 500')
                     color_index += 1
 
-    # Barra de progreso para cajas etiquetadas
+    # Barra de progreso para cajas etiquetadas #mu raro to
     with col6:
         st.subheader('Progress of Boxes Labeled')
         color_index = 0
