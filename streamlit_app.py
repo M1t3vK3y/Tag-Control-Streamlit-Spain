@@ -114,6 +114,7 @@ if selected_labelers:
     col5, col6 = st.columns(2)
     
     # Barra de progreso para imágenes etiquetadas
+    # Progress of Images Labeled
     with col5:
         st.subheader('Progress of Images Labeled')
         color_index = 0
@@ -121,14 +122,25 @@ if selected_labelers:
             st.markdown(f"<h4 style='text-align: center; text-decoration: underline;'>{name}</h4>", unsafe_allow_html=True)
             for labeler_id, data in selected_labelers.items():
                 if url in data["urls"]:
-                    images = data["urls"][url]["images"]
-                    images_progress = min((images / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
-                    color = assigned_colors[labeler_id]
-                    st.progress(images_progress)
-                    st.subheader(f':{color}[{data["name"]}]: {images} / 500')
-                    color_index += 1
-
-    # Barra de progreso para cajas etiquetadas #mu raro to
+                    # Usar un contenedor para el etiquetador y sus barras
+                    with st.container():
+                        images = data["urls"][url]["images"]
+                        images_progress = min((images / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
+                        color = assigned_colors[labeler_id]
+                        
+                        # Dividir en dos subcolumnas para mantener alineación con la columna de cajas
+                        subcol_img1, subcol_img2 = st.columns([1, 4])  # Ajustar el ancho de las subcolumnas
+                        
+                        with subcol_img1:
+                            st.subheader(f':{color}[{data["name"]}]')
+                        
+                        with subcol_img2:
+                            st.progress(images_progress)
+                            st.subheader(f'{images} / 500')
+    
+                        color_index += 1
+    
+    # Progress of Boxes Labeled
     with col6:
         st.subheader('Progress of Boxes Labeled')
         color_index = 0
@@ -136,30 +148,38 @@ if selected_labelers:
             st.markdown(f"<h4 style='text-align: center; text-decoration: underline;'>{name}</h4>", unsafe_allow_html=True)
             for labeler_id, data in selected_labelers.items():
                 if url in data["urls"]:
-                    boxes = data["urls"][url]["boxes"]
-                    boxes_progress = min((boxes / 8000), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
-                    color = assigned_colors[labeler_id]
-
-                    # Mostrar barra de progreso para "boxes"
-                    st.progress(boxes_progress)
-                    st.subheader(f':{color}[{data["name"]}]: {boxes} / 8000')
-
-                    # Dividir en tres columnas para mostrar boxesAdded, boxesRemoved y boxesUpdated
-                    subcol1, subcol2, subcol3 = st.columns(3)
-
-                    # Mostrar información de "boxesAdded"
-                    with subcol1:
-                        boxes_added = data["urls"][url]["boxesAdded"]  # Extraer el valor de boxesAdded
-                        st.metric("Boxes Added", boxes_added)
-
-                    # Mostrar información de "boxesRemoved"
-                    with subcol2:
-                        boxes_removed = data["urls"][url]["boxesRemoved"]  # Extraer el valor de boxesRemoved
-                        st.metric("Boxes Removed", boxes_removed)
-
-                    # Mostrar información de "boxesUpdated"
-                    with subcol3:
-                        boxes_updated = data["urls"][url]["boxesUpdated"]  # Extraer el valor de boxesUpdated
-                        st.metric("Boxes Updated", boxes_updated)
-
-                    color_index += 1
+                    # Usar un contenedor para el etiquetador y sus barras
+                    with st.container():
+                        boxes = data["urls"][url]["boxes"]
+                        boxes_progress = min((boxes / 8000), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
+                        color = assigned_colors[labeler_id]
+    
+                        # Dividir en dos subcolumnas para mantener alineación con la columna de imágenes
+                        subcol_box1, subcol_box2 = st.columns([1, 4])  # Ajustar el ancho de las subcolumnas
+    
+                        with subcol_box1:
+                            st.subheader(f':{color}[{data["name"]}]')
+                        
+                        with subcol_box2:
+                            st.progress(boxes_progress)
+                            st.subheader(f'{boxes} / 8000')
+    
+                        # Añadir las 3 columnas para Boxes Added, Removed y Updated
+                        subcol1, subcol2, subcol3 = st.columns(3)
+    
+                        # Mostrar información de "boxesAdded"
+                        with subcol1:
+                            boxes_added = data["urls"][url]["boxesAdded"]  # Extraer el valor de boxesAdded
+                            st.metric("Boxes Added", boxes_added)
+    
+                        # Mostrar información de "boxesRemoved"
+                        with subcol2:
+                            boxes_removed = data["urls"][url]["boxesRemoved"]  # Extraer el valor de boxesRemoved
+                            st.metric("Boxes Removed", boxes_removed)
+    
+                        # Mostrar información de "boxesUpdated"
+                        with subcol3:
+                            boxes_updated = data["urls"][url]["boxesUpdated"]  # Extraer el valor de boxesUpdated
+                            st.metric("Boxes Updated", boxes_updated)
+    
+                        color_index += 1
