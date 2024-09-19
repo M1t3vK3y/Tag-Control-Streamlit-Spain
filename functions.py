@@ -18,6 +18,11 @@ def get_labelers_data(start_date, end_date, urls):
         
         logging.info(f"Making request to {url} with params {params}")
         response = requests.get(url, params=params)
+        
+        # **Imprimir el contenido completo de la respuesta**
+        logging.info(f"Response from {url}: {response.text}")  # Imprimir la respuesta completa para debug
+        st.write(f"Response from {url}: {response.text}")  # Mostrar en la interfaz de Streamlit
+        
         if response.status_code == 200:
             data = response.json()
             logging.info(f"Data received from {url}: {data}")
@@ -28,7 +33,7 @@ def get_labelers_data(start_date, end_date, urls):
                 labeler_name = labeler["displayName"]
                 images_labeled = sum(entry["imagesLabeled"] for entry in data["data"] if entry["labelerId"] == labeler_id)
                 boxes_labeled = sum(entry["boxesDrawn"] for entry in data["data"] if entry["labelerId"] == labeler_id)
-                # Save Data for each URL separately
+                
                 if labeler_id not in labelers_data:
                     labelers_data[labeler_id] = {
                         "name": labeler_name,
@@ -42,5 +47,6 @@ def get_labelers_data(start_date, end_date, urls):
         else:
             st.error(f"Error making API request: {url}")
             logging.error(f"Request error to {url}: {response.status_code}")
+    
     logging.info(f"Accumulated data: {labelers_data}")
     return labelers_data
