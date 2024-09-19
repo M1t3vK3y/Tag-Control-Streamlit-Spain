@@ -143,8 +143,3 @@ if selected_labelers:
                     st.subheader(f':{color}[{data["name"]}]: {boxes} / 8000')
                     color_index += 1
 
-st.markdown("---")  # Línea divisoria
-st.subheader("URLs utilizadas para la obtención de datos (incluyendo las fechas seleccionadas)")
-for url, api_key, name in params.urls:
-    full_url = f"{url}?api_key={api_key}&startDate={start_date.strftime('%Y-%m-%d')}&endDate={end_date.strftime('%Y-%m-%d')}"
-    st.write(f"- {name}: {full_url}")
