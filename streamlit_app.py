@@ -139,7 +139,7 @@ if selected_labelers:
                     boxes = data["urls"][url]["boxes"]
                     boxes_progress = min((boxes / 8000), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
                     color = assigned_colors[labeler_id]
-                    
+
                     # Mostrar barra de progreso para "boxes"
                     st.progress(boxes_progress)
                     st.subheader(f':{color}[{data["name"]}]: {boxes} / 8000')
@@ -149,18 +149,17 @@ if selected_labelers:
 
                     # Mostrar información de "boxesAdded"
                     with subcol1:
-                        boxes_added = sum(entry["boxesAdded"] for entry in data["urls"].values())
+                        boxes_added = data["urls"][url]["boxesAdded"]  # Extraer el valor de boxesAdded
                         st.metric("Boxes Added", boxes_added)
 
                     # Mostrar información de "boxesRemoved"
                     with subcol2:
-                        boxes_removed = sum(entry["boxesRemoved"] for entry in data["urls"].values())
+                        boxes_removed = data["urls"][url]["boxesRemoved"]  # Extraer el valor de boxesRemoved
                         st.metric("Boxes Removed", boxes_removed)
 
                     # Mostrar información de "boxesUpdated"
                     with subcol3:
-                        boxes_updated = sum(entry["boxesUpdated"] for entry in data["urls"].values())
+                        boxes_updated = data["urls"][url]["boxesUpdated"]  # Extraer el valor de boxesUpdated
                         st.metric("Boxes Updated", boxes_updated)
 
                     color_index += 1
-
