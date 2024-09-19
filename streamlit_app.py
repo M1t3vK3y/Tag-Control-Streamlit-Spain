@@ -127,12 +127,17 @@ if selected_labelers:
                     color = assigned_colors[labeler_id]
                     st.progress(images_progress)
                     st.subheader(f':{color}[{data["name"]}]: {images} / 500')
-                    st.write('')
-                    st.write('')
-                    st.write('')
-                    st.write('')
-                    st.write('')
-                    st.write('')
+                    subcol1, subcol2, subcol3 = st.columns(3)
+                    with subcol1:
+                         st.empty()
+
+                    # Mostrar información de "boxesRemoved"
+                    with subcol2:
+                         st.empty()
+
+                    # Mostrar información de "boxesUpdated"
+                    with subcol3:
+                         st.empty()
                     color_index += 1
     
     # Progress of Boxes Labeled
