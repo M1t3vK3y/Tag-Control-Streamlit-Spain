@@ -122,30 +122,12 @@ if selected_labelers:
             st.markdown(f"<h4 style='text-align: center; text-decoration: underline;'>{name}</h4>", unsafe_allow_html=True)
             for labeler_id, data in selected_labelers.items():
                 if url in data["urls"]:
-                    # Usar un contenedor para el etiquetador y sus barras
-                    with st.container():
-                        images = data["urls"][url]["images"]
-                        images_progress = min((images / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
-                        color = assigned_colors[labeler_id]
-    
-                        # Subcolumnas vacías para que coincidan con la estructura de la columna 6
-                        subcol_img1, subcol_img2, subcol_img3, subcol_img4 = st.columns([1, 4, 1, 1])
-    
-                        with subcol_img1:
-                            st.subheader(f':{color}[{data["name"]}]')  # Nombre del etiquetador
-    
-                        with subcol_img2:
-                            st.progress(images_progress)
-                            st.subheader(f'{images} / 500')
-    
-                        # Subcolumnas vacías para mantener el espaciado y alineación
-                        with subcol_img3:
-                            st.empty()  # Columna vacía para el espaciado
-    
-                        with subcol_img4:
-                            st.empty()  # Columna vacía para el espaciado
-    
-                        color_index += 1
+                    images = data["urls"][url]["images"]
+                    images_progress = min((images / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
+                    color = assigned_colors[labeler_id]
+                    st.progress(images_progress)
+                    st.subheader(f':{color}[{data["name"]}]: {images} / 500')
+                    color_index += 1
     
     # Progress of Boxes Labeled
     with col6:
