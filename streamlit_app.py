@@ -129,18 +129,15 @@ if selected_labelers:
                     st.subheader(f':{color}[{data["name"]}]: {images} / 500')
                     subcol1, subcol2, subcol3 = st.columns(3)
                     with subcol1:
-                         with st.container():
-                            st.empty()
+                         st.metric(label="", value="", delta="")
 
                     # Mostrar información de "boxesRemoved"
                     with subcol2:
-                         with st.container():
-                            st.empty()
+                         st.metric(label="", value="", delta="")
 
                     # Mostrar información de "boxesUpdated"
                     with subcol3:
-                         with st.container():
-                            st.empty()
+                         st.metric(label="", value="", delta="")
                     color_index += 1
     
     # Progress of Boxes Labeled
