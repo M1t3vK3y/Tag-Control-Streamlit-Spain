@@ -132,6 +132,7 @@ if selected_labelers:
                     st.write('')
                     st.write('')
                     st.write('')
+                    st.write('')
                     color_index += 1
     
     # Progress of Boxes Labeled
