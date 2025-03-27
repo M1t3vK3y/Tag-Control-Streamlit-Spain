@@ -125,7 +125,7 @@ if selected_labelers:
                     images = data["urls"][url]["images"]
                     #images_progress = min((images / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
                     color = assigned_colors[labeler_id]
-                    st.progress(images_progress)
+                    #st.progress(images_progress)
                     st.subheader(f':{color}[{data["name"]}]: {images}')
                     subcol1, subcol2= st.columns(2)
                     with subcol1:
@@ -157,7 +157,7 @@ if selected_labelers:
                     color = assigned_colors[labeler_id]
 
                     # Mostrar barra de progreso para "boxes"
-                    st.progress(boxes_progress)
+                    #st.progress(boxes_progress)
                     st.subheader(f':{color}[{data["name"]}]: {boxes}')
 
                     # Dividir en tres columnas para mostrar boxesAdded, boxesRemoved y boxesUpdated
