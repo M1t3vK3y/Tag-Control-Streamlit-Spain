@@ -78,7 +78,7 @@ if selected_labelers:
             color = assigned_colors[labeler_id]
             fig2.add_trace(go.Bar(
                 x=[data['name']],
-                y=[total_boxes],
+                y=[boxes_added],
                 name=data['name'],
                 marker_color=color
             ))
@@ -104,7 +104,7 @@ if selected_labelers:
     with col4:
         fig4 = go.Figure()
         labels = [data['name'] for data in selected_labelers.values()]
-        values = [sum(data['urls'][url]['boxes'] for url in data['urls']) for data in selected_labelers.values()]
+        values = [sum(data['urls'][url]['boxesAdded'] for url in data['urls']) for data in selected_labelers.values()]
         colors = [assigned_colors[labeler_id] for labeler_id in selected_labelers.keys()]
         fig4.add_trace(go.Pie(labels=labels, values=values, marker=dict(colors=colors)))
         fig4.update_layout(title='Percentage of Boxes Labeled by Labeler')
@@ -158,7 +158,7 @@ if selected_labelers:
 
                     # Mostrar barra de progreso para "boxes"
                     #st.progress(boxes_progress)
-                    st.subheader(f':{color}[{data["name"]}]: {boxes}')
+                    st.subheader(f':{color}[{data["name"]}]:')
 
                     # Dividir en tres columnas para mostrar boxesAdded, boxesRemoved y boxesUpdated
                     subcol1, subcol2, subcol3 = st.columns(3)
