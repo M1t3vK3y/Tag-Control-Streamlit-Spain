@@ -123,10 +123,10 @@ if selected_labelers:
             for labeler_id, data in selected_labelers.items():
                 if url in data["urls"]:
                     images = data["urls"][url]["images"]
-                    images_progress = min((images / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
+                    #images_progress = min((images / 500), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
                     color = assigned_colors[labeler_id]
                     st.progress(images_progress)
-                    st.subheader(f':{color}[{data["name"]}]: {images} / 500')
+                    st.subheader(f':{color}[{data["name"]}]: {images}')
                     subcol1, subcol2= st.columns(2)
                     with subcol1:
                            # Esto se puede usar para un pequeño espacio
@@ -153,12 +153,12 @@ if selected_labelers:
             for labeler_id, data in selected_labelers.items():
                 if url in data["urls"]:
                     boxes = data["urls"][url]["boxes"]
-                    boxes_progress = min((boxes / 8000), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
+                    #boxes_progress = min((boxes / 8000), 1.0)  # Asegurar que esté dentro del rango [0.0, 1.0]
                     color = assigned_colors[labeler_id]
 
                     # Mostrar barra de progreso para "boxes"
                     st.progress(boxes_progress)
-                    st.subheader(f':{color}[{data["name"]}]: {boxes} / 8000')
+                    st.subheader(f':{color}[{data["name"]}]: {boxes}')
 
                     # Dividir en tres columnas para mostrar boxesAdded, boxesRemoved y boxesUpdated
                     subcol1, subcol2, subcol3 = st.columns(3)
