@@ -74,7 +74,7 @@ if selected_labelers:
         fig2 = go.Figure()
         color_index = 0
         for labeler_id, data in selected_labelers.items():
-            boxes_added = data["urls"][url]["boxesAdded"]
+            boxes_added = sum(data["urls"][url]["boxesAdded"] for url in data['urls'])
             color = assigned_colors[labeler_id]
             fig2.add_trace(go.Bar(
                 x=[data['name']],
